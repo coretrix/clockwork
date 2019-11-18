@@ -32,7 +32,7 @@ mysqlDataSource.LogQuery("Select * from address where id = ?", 1, []string{"a"})
 ```
 
 Redis data source
-```gotemplate
+```go
 var redisDataSource dataSource.CommandLoggerDataSourceInterface = &dataSource.RedisDataSource{}
 profiler.AddDataSource(redisDataSource)
 
@@ -41,7 +41,7 @@ redisDataSource.LogCommand("hGet", "test_key_2", 0.15)
 ```
 
 Cache data source
-```gotemplate
+```go
 var cacheDataSource dataSource.CacheLoggerDataSourceInterface = &dataSource.CacheDataSource{}
 profiler.AddDataSource(cacheDataSource)
 
@@ -49,7 +49,7 @@ cacheDataSource.LogCache("miss", "price", "30.10$", 12.22, 3000)
 ```
 
 Timeline data source
-```gotemplate
+```go
 var timelineDataSource dataSource.TimelineLoggerDataSourceInterface = &dataSource.TimelineDataSource{}
 profiler.SetTimeLineDataSource(timelineDataSource)
 
@@ -63,7 +63,7 @@ profiler.GetTimeLineDataSource().EndEvent("Event_22")
 ```
 
 Request data source
-```gotemplate
+```go
 var requestDataSource dataSource.RequestLoggerDataSourceInterface = &dataSource.RequestResponseDataSource{}
 profiler.SetRequestDataSource(requestDataSource)
 
@@ -78,7 +78,7 @@ profiler.GetRequestDataSource().SetResponseStatus(200)
 ```
 
 Logger(debugger) data source
-```gotemplate
+```go
 var loggerDataSource dataSource.LoggerDataSourceInterface = &dataSource.LoggerDataSource{}
 profiler.SetLoggerDataSource(loggerDataSource)
 
@@ -96,13 +96,13 @@ profiler.GetLoggerDataSource().LogDebugMap("users", users)
 
 ## Before end of the request
 You should call those 2 methods
-```gotemplate
+```go
 profiler.Resolve()
 profiler.SaveData()
 ```
 
 The last thing u need to do is to send 2 special headers into the response:
-```gotemplate
+```go
 c.Writer.Header().Set("X-Clockwork-Id", profiler.GetUniqueId())
 c.Writer.Header().Set("X-Clockwork-Version", "4.0.13")
 ```
