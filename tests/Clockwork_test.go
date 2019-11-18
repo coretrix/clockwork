@@ -51,5 +51,5 @@ func TestClockwork_GetData(t *testing.T) {
 	assert.Equal(t, response.CacheReads, int16(1))
 	assert.Equal(t, response.CacheHits, int16(0))
 	assert.Equal(t, response.CacheDeletes, int16(0))
-	assert.Equal(t, response.CacheWrites, int16(1))
+	assert.Equal(t, response.CacheWrites, int16(0))
 }
