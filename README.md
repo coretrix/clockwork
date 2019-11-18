@@ -63,9 +63,8 @@ profiler.GetRequestDataSource().StartMemoryUsage()
 profiler.GetRequestDataSource().SetController("HomeController", "IndexAction")
 
 //at the end of request	
-profiler.GetRequestDataSource().SetStartTime(time.Now())
-profiler.GetRequestDataSource().StartMemoryUsage()
-profiler.GetRequestDataSource().SetController("HomeController", "IndexAction")
+profiler.GetRequestDataSource().SetResponseTime(time.Now())
+profiler.GetRequestDataSource().SetResponseStatus(200)
 ```
 
 Logger(debugger) data source

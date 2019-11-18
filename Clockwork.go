@@ -2,8 +2,8 @@ package clockwork
 
 import (
 	"encoding/json"
+	dataSource "github.com/anton-shumanski/clockwork/data-source"
 	"github.com/go-redis/redis/v7"
-	dataSource "go-api/src/lib/clockwork/data-source"
 	"math/rand"
 	"strconv"
 	"time"
@@ -18,7 +18,7 @@ type Clockwork struct {
 	timeLineDataSource   *dataSource.TimelineLoggerDataSourceInterface
 	requestDataSource    *dataSource.RequestLoggerDataSourceInterface
 	loggerDataSource     *dataSource.LoggerDataSourceInterface
-	data    		 	 *dataSource.DataBuffer
+	data                 *dataSource.DataBuffer
 }
 
 func (clockwork *Clockwork) AddDataSource(source dataSource.DataSource) *dataSource.DataSource {
@@ -49,14 +49,14 @@ func (clockwork *Clockwork) GetSavedData(id string) dataSource.DataBuffer {
 		panic(err)
 	}
 
-	clockwork.RedisStorageProvider.Expire(key, time.Minute * 5)
+	clockwork.RedisStorageProvider.Expire(key, time.Minute*5)
 	var raw dataSource.DataBuffer
 	err = json.Unmarshal([]byte(result), &raw)
 
 	return raw
 }
 
-func (clockwork *Clockwork) GetUniqueId() string  {
+func (clockwork *Clockwork) GetUniqueId() string {
 	if clockwork.id != "" {
 		return clockwork.id
 	}
