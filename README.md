@@ -1,4 +1,4 @@
-# Server-side component for Clockwork browser extension
+# Server-side component for Clockwork browser extension written in GO
 
 ## Attach and use data-sources to clockwork instance.
 
@@ -85,7 +85,7 @@ slove["Fred"] = "15 agas"
 profiler.GetLoggerDataSource().LogDebugMap("users", users)	
 ```
 
-##Before end of the request
+## Before end of the request
 You should call those 2 methods
 ```gotemplate
 profiler.Resolve()
