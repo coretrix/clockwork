@@ -2,18 +2,28 @@
 
 ## Attach and use data-sources to clockwork instance.
 
-```gotemplate
-client := redis.NewClient(&redis.Options{
-		Addr:     "127.0.0.1:6379", //your address
-		Password: "", // your password
-		DB:       0, 
-	})
-	
-profiler := clockwork.Clockwork{RedisStorageProvider: client}
+```go
+package main
+import (
+
+"github.com/anton-shumanski/clockwork"
+"github.com/go-redis/redis"
+)
+
+
+func main()  {
+ client := redis.NewClient(&redis.Options{
+ 		Addr:     "127.0.0.1:6379", //your address
+ 		Password: "", // your password
+ 		DB:       0, 
+ 	})
+ 	
+ profiler := clockwork.Clockwork{RedisStorageProvider: client}
+}
 ```
 
 Mysql data source
-```gotemplate
+```go
 var mysqlDataSource dataSource.QueryLoggerDataSourceInterface = &dataSource.MysqlDataSource{}
 profiler.AddDataSource(mysqlDataSource)
 
