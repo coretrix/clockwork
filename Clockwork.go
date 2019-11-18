@@ -36,7 +36,7 @@ func (clockwork *Clockwork) Resolve() *dataSource.DataBuffer {
 }
 
 func (clockwork *Clockwork) SaveData() {
-	jsonString, _ := json.Marshal(clockwork.data)
+	jsonString, _ := json.Marshal(clockwork.Resolve())
 	err := clockwork.RedisStorageProvider.HSet(key, clockwork.GetUniqueId(), jsonString).Err()
 	if err != nil {
 		panic(err)

@@ -1,9 +1,9 @@
 package tests
 
 import (
+	"github.com/anton-shumanski/clockwork"
+	dataSource "github.com/anton-shumanski/clockwork/data-source"
 	"github.com/stretchr/testify/assert"
-	"go-api/src/lib/clockwork"
-	"go-api/src/lib/clockwork/data-source"
 	"testing"
 	"time"
 )
@@ -29,7 +29,7 @@ func TestClockwork_GetData(t *testing.T) {
 	redisDataSource.LogCommand("hSet", "test_key_1", 0.12)
 	redisDataSource.LogCommand("hGet", "test_key_1", 0.15)
 
-	cacheDataSource.LogCache(dataSource.CacheMiss, "test_key","30cm", 12.22, 3000)
+	cacheDataSource.LogCache(dataSource.CacheMiss, "test_key", "30cm", 12.22, 3000)
 
 	timelineDataSource.StartEvent("Request_11", "My first request desc")
 	timelineDataSource.EndEvent("Request_11")

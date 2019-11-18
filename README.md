@@ -95,9 +95,8 @@ profiler.GetLoggerDataSource().LogDebugMap("users", users)
 ```
 
 ## Before end of the request
-You should call those 2 methods
+You should call this method
 ```go
-profiler.Resolve()
 profiler.SaveData()
 ```
 
