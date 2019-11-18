@@ -89,8 +89,8 @@ test1[1] = "item 2"
 profiler.GetLoggerDataSource().LogDebugSlice("cart", test1)
 
 users := make(map[string]string)
-slove["Adam"] = "33 ages"
-slove["Fred"] = "15 agas"
+users["Adam"] = "33 ages"
+users["Fred"] = "15 ages"
 profiler.GetLoggerDataSource().LogDebugMap("users", users)	
 ```
 
