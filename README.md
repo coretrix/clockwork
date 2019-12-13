@@ -18,7 +18,9 @@ func main()  {
  		DB:       0, 
  	})
  	
- profiler := clockwork.Clockwork{RedisStorageProvider: client}
+ profiler := clockwork.Clockwork{
+    DataProvider: clockwork.DataProvider{RedisStorageProvider: client},
+ }
 }
 ```
 

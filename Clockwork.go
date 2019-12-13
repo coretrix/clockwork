@@ -1,9 +1,7 @@
 package clockwork
 
 import (
-	"encoding/json"
 	dataSource "github.com/anton-shumanski/clockwork/data-source"
-	"github.com/go-redis/redis/v7"
 	"math/rand"
 	"strconv"
 	"time"
@@ -12,13 +10,13 @@ import (
 const key = "profiler_store"
 
 type Clockwork struct {
-	RedisStorageProvider *redis.Client
-	dataSources          []dataSource.DataSource
-	id                   string
-	timeLineDataSource   *dataSource.TimelineLoggerDataSourceInterface
-	requestDataSource    *dataSource.RequestLoggerDataSourceInterface
-	loggerDataSource     *dataSource.LoggerDataSourceInterface
-	data                 *dataSource.DataBuffer
+	DataProvider       DataProviderInterface
+	dataSources        []dataSource.DataSource
+	id                 string
+	timeLineDataSource *dataSource.TimelineLoggerDataSourceInterface
+	requestDataSource  *dataSource.RequestLoggerDataSourceInterface
+	loggerDataSource   *dataSource.LoggerDataSourceInterface
+	data               *dataSource.DataBuffer
 }
 
 func (clockwork *Clockwork) AddDataSource(source dataSource.DataSource) *dataSource.DataSource {
@@ -36,24 +34,11 @@ func (clockwork *Clockwork) Resolve() *dataSource.DataBuffer {
 }
 
 func (clockwork *Clockwork) SaveData() {
-	jsonString, _ := json.Marshal(clockwork.Resolve())
-	err := clockwork.RedisStorageProvider.HSet(key, clockwork.GetUniqueId(), jsonString).Err()
-	if err != nil {
-		panic(err)
-	}
+	clockwork.DataProvider.Set(key, clockwork.GetUniqueId(), clockwork.Resolve())
 }
 
 func (clockwork *Clockwork) GetSavedData(id string) dataSource.DataBuffer {
-	result, err := clockwork.RedisStorageProvider.HGet(key, id).Result()
-	if err != nil {
-		panic(err)
-	}
-
-	clockwork.RedisStorageProvider.Expire(key, time.Minute*5)
-	var raw dataSource.DataBuffer
-	err = json.Unmarshal([]byte(result), &raw)
-
-	return raw
+	return clockwork.DataProvider.Get(key, id)
 }
 
 func (clockwork *Clockwork) GetUniqueId() string {
