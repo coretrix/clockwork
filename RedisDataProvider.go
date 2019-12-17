@@ -7,11 +7,11 @@ import (
 	"time"
 )
 
-type DataProvider struct {
+type RedisDataProvider struct {
 	RedisStorageProvider *redis.Client
 }
 
-func (provider *DataProvider) Get(key string, id string) dataSource.DataBuffer {
+func (provider *RedisDataProvider) Get(key string, id string) dataSource.DataBuffer {
 	result, err := provider.RedisStorageProvider.HGet(key, id).Result()
 	if err != nil {
 		panic(err)
@@ -24,7 +24,7 @@ func (provider *DataProvider) Get(key string, id string) dataSource.DataBuffer {
 	return raw
 }
 
-func (provider *DataProvider) Set(key string, id string, data *dataSource.DataBuffer) {
+func (provider *RedisDataProvider) Set(key string, id string, data *dataSource.DataBuffer) {
 	jsonString, _ := json.Marshal(data)
 	err := provider.RedisStorageProvider.HSet(key, id, jsonString).Err()
 	if err != nil {

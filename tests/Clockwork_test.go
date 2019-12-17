@@ -23,8 +23,11 @@ func TestClockwork_GetData(t *testing.T) {
 	profiler.SetRequestDataSource(requestResponseDataSource)
 
 	requestResponseDataSource.SetStartTime(time.Now())
-	mysqlDataSource.LogQuery("SELECT * FROM users", 12.224, []string{})
-	mysqlDataSource.LogQuery("SELECT * FROM address where id = ?", 1, []string{"15"})
+	var bind1 []interface{}
+	var bind2 []interface{}
+	bind2 = append(bind2, 1, 2, "test param")
+	mysqlDataSource.LogQuery("SELECT * FROM users", 12.224, bind1)
+	mysqlDataSource.LogQuery("SELECT * FROM address where id = ?", 1, bind2)
 
 	redisDataSource.LogCommand("hSet", "test_key_1", 0.12)
 	redisDataSource.LogCommand("hGet", "test_key_1", 0.15)

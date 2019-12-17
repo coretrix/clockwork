@@ -18,9 +18,9 @@ func main()  {
  		DB:       0, 
  	})
  	
- profiler := clockwork.Clockwork{
-    DataProvider: clockwork.DataProvider{RedisStorageProvider: client},
- }
+ var redisDataProvider clockwork.DataProviderInterface
+ redisDataProvider = clockwork.RedisDataProvider{RedisStorageProvider: client}
+ profiler := clockwork.Clockwork{DataProvider: redisDataProvider}
 }
 ```
 
@@ -29,8 +29,11 @@ Mysql data source
 var mysqlDataSource dataSource.QueryLoggerDataSourceInterface = &dataSource.MysqlDataSource{}
 profiler.AddDataSource(mysqlDataSource)
 
-mysqlDataSource.LogQuery("Select * from users where id = ?", 12.224, []string{"a"})
-mysqlDataSource.LogQuery("Select * from address where id = ?", 1, []string{"a"})
+var bind1 []interface{}
+var bind2 []interface{}
+bind2 = append(bind2, 1, 2, "test param")
+mysqlDataSource.LogQuery("SELECT * FROM users", 12.224, bind1)
+mysqlDataSource.LogQuery("SELECT * FROM address where id = ?", 1, bind2)
 ```
 
 Redis data source
