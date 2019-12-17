@@ -1,7 +1,7 @@
 package dataSource
 
 import (
-	"strings"
+	"fmt"
 )
 
 type QueryLoggerDataSourceInterface interface {
@@ -10,23 +10,23 @@ type QueryLoggerDataSourceInterface interface {
 }
 
 type QueryLoggerInterface interface {
-	LogQuery(query string, duration float32, bind []string)
+	LogQuery(query string, duration float32, bind []interface{})
 }
 
 type mySqlStructure = struct {
-	Model string `json:"model"`
-	Query string `json:"query"`
-	Duration float32 `json:"duration"`
-	Connection string `json:"connection"`
-	Tags []string `json:"tags"`
+	Model      string   `json:"model"`
+	Query      string   `json:"query"`
+	Duration   float32  `json:"duration"`
+	Connection string   `json:"connection"`
+	Tags       []string `json:"tags"`
 }
 
 type MysqlDataSource struct {
-	commands []interface{}
+	commands      []interface{}
 	totalDuration float32
 }
 
-func (source *MysqlDataSource) LogQuery(query string, duration float32, bind []string)  {
+func (source *MysqlDataSource) LogQuery(query string, duration float32, bind []interface{}) {
 	var tags []string
 
 	if duration > 2 {
@@ -34,11 +34,11 @@ func (source *MysqlDataSource) LogQuery(query string, duration float32, bind []s
 	}
 
 	structure := mySqlStructure{
-		Model: "mysql",
-		Query: query + " [" + strings.Join(bind, ", ") + "]",
-		Duration: duration,
+		Model:      "mysql",
+		Query:      query + " [" + fmt.Sprintf("%v", bind) + "]",
+		Duration:   duration,
 		Connection: "test-connection",
-		Tags: tags,
+		Tags:       tags,
 	}
 
 	source.totalDuration += duration
