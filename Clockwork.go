@@ -77,7 +77,7 @@ func (clockwork *Clockwork) SetLoggerDataSource(source dataSource.LoggerDataSour
 	clockwork.AddDataSource(source)
 }
 
-func (clockwork *Clockwork) GeDatabaseDataSource() dataSource.QueryLoggerInterface {
+func (clockwork *Clockwork) GetDatabaseDataSource() dataSource.QueryLoggerInterface {
 	return *clockwork.databaseDataSource
 }
 
