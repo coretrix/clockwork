@@ -10,7 +10,7 @@ type QueryLoggerDataSourceInterface interface {
 }
 
 type QueryLoggerInterface interface {
-	LogQuery(query string, duration float32, bind []interface{})
+	LogQuery(model, query string, duration float32, bind []interface{})
 }
 
 type mySqlStructure = struct {
@@ -21,12 +21,12 @@ type mySqlStructure = struct {
 	Tags       []string `json:"tags"`
 }
 
-type MysqlDataSource struct {
+type DatabaseDataSource struct {
 	commands      []interface{}
 	totalDuration float32
 }
 
-func (source *MysqlDataSource) LogQuery(query string, duration float32, bind []interface{}) {
+func (source *DatabaseDataSource) LogQuery(model, query string, duration float32, bind []interface{}) {
 	var tags []string
 
 	if duration > 2 {
@@ -34,7 +34,7 @@ func (source *MysqlDataSource) LogQuery(query string, duration float32, bind []i
 	}
 
 	structure := mySqlStructure{
-		Model:      "mysql",
+		Model:      model,
 		Query:      query + " [" + fmt.Sprintf("%v", bind) + "]",
 		Duration:   duration,
 		Connection: "test-connection",
@@ -45,7 +45,7 @@ func (source *MysqlDataSource) LogQuery(query string, duration float32, bind []i
 	source.commands = append(source.commands, &structure)
 }
 
-func (source *MysqlDataSource) Resolve(dataBuffer *DataBuffer) {
+func (source *DatabaseDataSource) Resolve(dataBuffer *DataBuffer) {
 	dataBuffer.DatabaseQueries = source.commands
 	dataBuffer.DatabaseDuration = source.totalDuration
 	dataBuffer.DatabaseQueriesCount = len(dataBuffer.DatabaseQueries)

@@ -10,24 +10,24 @@ import (
 
 func TestClockwork_GetData(t *testing.T) {
 	profiler := clockwork.Clockwork{}
-	var mysqlDataSource dataSource.QueryLoggerDataSourceInterface = new(dataSource.MysqlDataSource)
+	var mysqlDataSource dataSource.QueryLoggerDataSourceInterface = new(dataSource.DatabaseDataSource)
 	var redisDataSource dataSource.CommandLoggerDataSourceInterface = new(dataSource.RedisDataSource)
 	var cacheDataSource dataSource.CacheLoggerDataSourceInterface = new(dataSource.CacheDataSource)
 	var timelineDataSource dataSource.TimelineLoggerDataSourceInterface = new(dataSource.TimelineDataSource)
 	var requestResponseDataSource dataSource.RequestLoggerDataSourceInterface = new(dataSource.RequestResponseDataSource)
 
-	profiler.AddDataSource(mysqlDataSource)
 	profiler.AddDataSource(redisDataSource)
 	profiler.AddDataSource(cacheDataSource)
 	profiler.SetTimeLineDataSource(timelineDataSource)
 	profiler.SetRequestDataSource(requestResponseDataSource)
+	profiler.SetDatabaseDataSource(mysqlDataSource)
 
 	requestResponseDataSource.SetStartTime(time.Now())
 	var bind1 []interface{}
 	var bind2 []interface{}
 	bind2 = append(bind2, 1, 2, "test param")
-	mysqlDataSource.LogQuery("SELECT * FROM users", 12.224, bind1)
-	mysqlDataSource.LogQuery("SELECT * FROM address where id = ?", 1, bind2)
+	mysqlDataSource.LogQuery("mysql", "SELECT * FROM users", 12.224, bind1)
+	mysqlDataSource.LogQuery("mysql", "SELECT * FROM address where id = ?", 1, bind2)
 
 	redisDataSource.LogCommand("hSet", "test_key_1", 0.12)
 	redisDataSource.LogCommand("hGet", "test_key_1", 0.15)

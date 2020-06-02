@@ -16,6 +16,7 @@ type Clockwork struct {
 	timeLineDataSource *dataSource.TimelineLoggerDataSourceInterface
 	requestDataSource  *dataSource.RequestLoggerDataSourceInterface
 	loggerDataSource   *dataSource.LoggerDataSourceInterface
+	databaseDataSource *dataSource.QueryLoggerDataSourceInterface
 	data               *dataSource.DataBuffer
 }
 
@@ -73,6 +74,15 @@ func (clockwork *Clockwork) GetRequestDataSource() dataSource.RequestLoggerDataS
 
 func (clockwork *Clockwork) SetLoggerDataSource(source dataSource.LoggerDataSourceInterface) {
 	clockwork.loggerDataSource = &source
+	clockwork.AddDataSource(source)
+}
+
+func (clockwork *Clockwork) GeDatabaseDataSource() dataSource.QueryLoggerInterface {
+	return *clockwork.databaseDataSource
+}
+
+func (clockwork *Clockwork) SetDatabaseDataSource(source dataSource.QueryLoggerDataSourceInterface) {
+	clockwork.databaseDataSource = &source
 	clockwork.AddDataSource(source)
 }
 

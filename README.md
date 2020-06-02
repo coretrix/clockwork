@@ -27,13 +27,13 @@ func main()  {
 Mysql data source
 ```go
 var mysqlDataSource dataSource.QueryLoggerDataSourceInterface = &dataSource.MysqlDataSource{}
-profiler.AddDataSource(mysqlDataSource)
+profiler.SetDatabaseDataSource(mysqlDataSource)
 
 var bind1 []interface{}
 var bind2 []interface{}
 bind2 = append(bind2, 1, 2, "test param")
-mysqlDataSource.LogQuery("SELECT * FROM users", 12.224, bind1)
-mysqlDataSource.LogQuery("SELECT * FROM address where id = ?", 1, bind2)
+mysqlDataSource.LogQuery("mysql", "SELECT * FROM users", 12.224, bind1)
+mysqlDataSource.LogQuery("mysql", "SELECT * FROM address where id = ?", 1, bind2)
 ```
 
 Redis data source
