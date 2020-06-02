@@ -29,7 +29,7 @@ type DatabaseDataSource struct {
 func (source *DatabaseDataSource) LogQuery(model, query string, duration float32, bind []interface{}) {
 	var tags []string
 
-	if duration > 2 {
+	if duration > 50 {
 		tags = append(tags, "slow")
 	}
 
