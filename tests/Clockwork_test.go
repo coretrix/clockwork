@@ -32,7 +32,7 @@ func TestClockwork_GetData(t *testing.T) {
 	redisDataSource.LogCommand("hSet", "test_key_1", 0.12)
 	redisDataSource.LogCommand("hGet", "test_key_1", 0.15)
 
-	cacheDataSource.LogCacheMiss("hGet", "test_key", "30cm", 1, 12.22, 3000)
+	cacheDataSource.LogCacheMiss("pool-1", "hGet", "test_key", "30cm", 1, 12.22, 3000)
 
 	timelineDataSource.StartEvent("Request_11", "My first request desc")
 	timelineDataSource.EndEvent("Request_11")

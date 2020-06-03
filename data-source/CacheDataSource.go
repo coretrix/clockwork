@@ -4,7 +4,6 @@ import "fmt"
 
 const (
 	CacheHit    = "hit"
-	CacheMiss   = "miss"
 	CacheWrite  = "write"
 	CacheDelete = "delete"
 )
@@ -15,8 +14,8 @@ type CacheLoggerDataSourceInterface interface {
 }
 
 type CacheLoggerInterface interface {
-	LogCache(typeParam, action string, key string, value string, duration float32, expiration float32)
-	LogCacheMiss(action string, key string, value string, misses int, duration float32, expiration float32)
+	LogCache(connection, typeParam, action string, key string, value string, duration float32, expiration float32)
+	LogCacheMiss(connection, action string, key string, value string, misses int, duration float32, expiration float32)
 }
 
 type cacheDataStructure struct {
@@ -37,7 +36,7 @@ type CacheDataSource struct {
 	cacheHits     int16
 }
 
-func (source *CacheDataSource) LogCache(typeParam, action string, key string, value string, duration float32, expiration float32) {
+func (source *CacheDataSource) LogCache(connection, typeParam, action string, key string, value string, duration float32, expiration float32) {
 	switch typeParam {
 	case CacheHit:
 		source.cacheHits += 1
@@ -56,20 +55,20 @@ func (source *CacheDataSource) LogCache(typeParam, action string, key string, va
 		Value:      value,
 		Expiration: expiration,
 		Duration:   duration,
-		Connection: "test-connection",
+		Connection: connection,
 	}
 
 	source.totalDuration += duration
 	source.commands = append(source.commands, &structure)
 }
 
-func (source *CacheDataSource) LogCacheMiss(action string, key string, value string, misses int, duration float32, expiration float32) {
+func (source *CacheDataSource) LogCacheMiss(connection, action string, key string, value string, misses int, duration float32, expiration float32) {
 	structure := cacheDataStructure{
 		Key:        key,
 		Value:      value,
 		Expiration: expiration,
 		Duration:   duration,
-		Connection: "test-connection",
+		Connection: connection,
 	}
 	if misses == 1 {
 		structure.Type = fmt.Sprintf("MISS %s", action)
