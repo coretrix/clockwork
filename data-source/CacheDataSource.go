@@ -50,7 +50,7 @@ func (source *CacheDataSource) LogCache(connection, typeParam, action string, ke
 	}
 
 	structure := cacheDataStructure{
-		Type:       fmt.Sprintf("%s %s", action, typeParam),
+		Type:       fmt.Sprintf("%s %s", typeParam, action),
 		Key:        key,
 		Value:      value,
 		Expiration: expiration,
