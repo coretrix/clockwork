@@ -16,6 +16,7 @@ type CacheLoggerDataSourceInterface interface {
 
 type CacheLoggerInterface interface {
 	LogCache(typeParam, action string, key string, value string, duration float32, expiration float32)
+	LogCacheMiss(action string, key string, value string, misses int, duration float32, expiration float32)
 }
 
 type cacheDataStructure struct {
@@ -41,8 +42,6 @@ func (source *CacheDataSource) LogCache(typeParam, action string, key string, va
 	case CacheHit:
 		source.cacheHits += 1
 		source.cacheReads += 1
-	case CacheMiss:
-		source.cacheReads += 1
 	case CacheWrite:
 		source.cacheWrites += 1
 	case CacheDelete:
@@ -60,6 +59,25 @@ func (source *CacheDataSource) LogCache(typeParam, action string, key string, va
 		Connection: "test-connection",
 	}
 
+	source.totalDuration += duration
+	source.commands = append(source.commands, &structure)
+}
+
+func (source *CacheDataSource) LogCacheMiss(action string, key string, value string, misses int, duration float32, expiration float32) {
+	structure := cacheDataStructure{
+		Key:        key,
+		Value:      value,
+		Expiration: expiration,
+		Duration:   duration,
+		Connection: "test-connection",
+	}
+	if misses == 1 {
+		structure.Type = fmt.Sprintf("MISS %s", action)
+	} else {
+		structure.Type = fmt.Sprintf("MISSES [%d] %s", misses, action)
+	}
+
+	source.cacheReads += 1
 	source.totalDuration += duration
 	source.commands = append(source.commands, &structure)
 }
