@@ -76,6 +76,7 @@ profiler.SetRequestDataSource(requestDataSource)
 profiler.GetRequestDataSource().SetStartTime(time.Now())
 profiler.GetRequestDataSource().StartMemoryUsage()
 profiler.GetRequestDataSource().SetController("HomeController", "IndexAction")
+profiler.GetRequestDataSource().SetMiddleware([]string{"Authorize", "Normalization", "Guard", "Handler"})
 
 //at the end of request	
 profiler.GetRequestDataSource().SetResponseTime(time.Now())

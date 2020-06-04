@@ -17,53 +17,57 @@ type RequestLoggerInterface interface {
 	StartMemoryUsage()
 	EndMemoryUsage()
 	SetController(controller string, method string)
+	SetMiddleware([]string)
 }
 
 type RequestResponseDataSource struct {
-	commands map[string]interface{}
-	startTime float64
+	startTime        float64
 	startMemoryUsage uint64
-	endMemoryUsage uint64
-	responseTime float64
-	responseStatus int16
-	description string
-	controller string
-	data []string
+	endMemoryUsage   uint64
+	responseTime     float64
+	responseStatus   int16
+	middleware       []string
+	controller       string
 }
 
-func (source *RequestResponseDataSource) SetController(controller string, method string)  {
-	source.controller = controller+ "@" +method
+func (source *RequestResponseDataSource) SetController(controller string, method string) {
+	source.controller = controller + "@" + method
 }
 
-func (source *RequestResponseDataSource) SetStartTime(start time.Time)  {
+func (source *RequestResponseDataSource) SetStartTime(start time.Time) {
 	source.startTime = MicroTime(start)
 }
 
-func (source *RequestResponseDataSource) SetResponseTime(responseTime time.Time)  {
+func (source *RequestResponseDataSource) SetResponseTime(responseTime time.Time) {
 	source.responseTime = MicroTime(responseTime)
 }
 
-func (source *RequestResponseDataSource) StartMemoryUsage()  {
+func (source *RequestResponseDataSource) StartMemoryUsage() {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 	source.startMemoryUsage = m.Alloc
 }
 
-func (source *RequestResponseDataSource) EndMemoryUsage()  {
+func (source *RequestResponseDataSource) EndMemoryUsage() {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 	source.endMemoryUsage = m.Alloc
 }
 
-func (source *RequestResponseDataSource) SetResponseStatus(responseStatus int16)  {
+func (source *RequestResponseDataSource) SetResponseStatus(responseStatus int16) {
 	source.responseStatus = responseStatus
+}
+
+func (source *RequestResponseDataSource) SetMiddleware(middleware []string) {
+	source.middleware = middleware
 }
 
 func (source *RequestResponseDataSource) Resolve(dataBuffer *DataBuffer) {
 	dataBuffer.Time = source.startTime
 	dataBuffer.Controller = source.controller
+	dataBuffer.Middleware = source.middleware
 	dataBuffer.MemoryUsage = source.endMemoryUsage - source.startMemoryUsage
 	dataBuffer.ResponseStatus = source.responseStatus
 	dataBuffer.ResponseTime = source.responseTime
-	dataBuffer.ResponseDuration = (	source.responseTime  * 1000 ) - (source.startTime * 1000)
+	dataBuffer.ResponseDuration = (source.responseTime * 1000) - (source.startTime * 1000)
 }

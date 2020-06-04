@@ -25,6 +25,8 @@ func TestClockwork_GetData(t *testing.T) {
 	requestResponseDataSource.SetStartTime(time.Now())
 	var bind1 []interface{}
 	var bind2 []interface{}
+	middleware := []string{"Authorize", "Normalization", "Guard", "Handler"}
+
 	bind2 = append(bind2, 1, 2, "test param")
 	mysqlDataSource.LogQuery("mysql", "SELECT * FROM users", 12.224, bind1)
 	mysqlDataSource.LogQuery("mysql", "SELECT * FROM address where id = ?", 1, bind2)
@@ -42,6 +44,7 @@ func TestClockwork_GetData(t *testing.T) {
 
 	requestResponseDataSource.SetResponseTime(time.Now())
 	requestResponseDataSource.SetResponseStatus(200)
+	requestResponseDataSource.SetMiddleware(middleware)
 
 	response := profiler.Resolve()
 
@@ -55,4 +58,5 @@ func TestClockwork_GetData(t *testing.T) {
 	assert.Equal(t, response.CacheHits, int16(0))
 	assert.Equal(t, response.CacheDeletes, int16(0))
 	assert.Equal(t, response.CacheWrites, int16(0))
+	assert.Equal(t, response.Middleware, middleware)
 }
