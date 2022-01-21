@@ -13,11 +13,13 @@ func TestClockwork_GetData(t *testing.T) {
 	var mysqlDataSource dataSource.QueryLoggerDataSourceInterface = new(dataSource.DatabaseDataSource)
 	var redisDataSource dataSource.CommandLoggerDataSourceInterface = new(dataSource.RedisDataSource)
 	var cacheDataSource dataSource.CacheLoggerDataSourceInterface = new(dataSource.CacheDataSource)
+	var customDataSource dataSource.UserDataSourceInterface = new(dataSource.UserDataDataSource)
 	var timelineDataSource dataSource.TimelineLoggerDataSourceInterface = new(dataSource.TimelineDataSource)
 	var requestResponseDataSource dataSource.RequestLoggerDataSourceInterface = new(dataSource.RequestResponseDataSource)
 
 	profiler.AddDataSource(redisDataSource)
 	profiler.AddDataSource(cacheDataSource)
+	profiler.AddDataSource(customDataSource)
 	profiler.SetTimeLineDataSource(timelineDataSource)
 	profiler.SetRequestDataSource(requestResponseDataSource)
 	profiler.SetDatabaseDataSource(mysqlDataSource)
@@ -45,6 +47,10 @@ func TestClockwork_GetData(t *testing.T) {
 	requestResponseDataSource.SetResponseTime(time.Now())
 	requestResponseDataSource.SetResponseStatus(200)
 	requestResponseDataSource.SetMiddleware(middleware)
+
+	customDataSource.SetShowAs("table")
+	customDataSource.SetTitle("test")
+	customDataSource.Log(map[string]interface{}{"a": 1}, "a1", "table", map[string]string{"a": "A"})
 
 	response := profiler.Resolve()
 

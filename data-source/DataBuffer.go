@@ -20,4 +20,5 @@ type DataBuffer struct {
 	ResponseTime         float64                `json:"responseTime"`
 	ResponseDuration     float64                `json:"responseDuration"`
 	ResponseStatus       int16                  `json:"responseStatus"`
+	UserData             []*UserDataDataSource  `json:"userData"`
 }
