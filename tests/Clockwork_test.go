@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"fmt"
 	"github.com/anton-shumanski/clockwork"
 	dataSource "github.com/anton-shumanski/clockwork/data-source"
 	"github.com/stretchr/testify/assert"
@@ -53,7 +54,7 @@ func TestClockwork_GetData(t *testing.T) {
 	customDataSource.Log(map[string]interface{}{"a": 1}, "a1", "table", map[string]string{"a": "A"})
 
 	response := profiler.Resolve()
-
+	fmt.Println(response.UserData)
 	assert.Equal(t, len(response.TimelineData), 2)
 	assert.Equal(t, len(response.DatabaseQueries), 2)
 	assert.Equal(t, len(response.CacheQueries), 1)

@@ -40,8 +40,12 @@ func (source *UserDataDataSource) SetTitle(title string) {
 
 func (source *UserDataDataSource) Resolve(dataBuffer *DataBuffer) {
 	if dataBuffer.UserData == nil {
-		dataBuffer.UserData = make([]*UserDataDataSource, 0)
+		dataBuffer.UserData = make([]map[string]interface{}, 0)
 	}
 
-	dataBuffer.UserData = append(dataBuffer.UserData, source)
+	dataBuffer.UserData = append(dataBuffer.UserData, map[string]interface{}{
+		"Title":  source.Title,
+		"Data":   source.Data,
+		"ShowAs": source.ShowAs,
+	})
 }
