@@ -1,10 +1,7 @@
 package clockwork
 
 import (
-	"encoding/json"
-	"fmt"
 	dataSource "github.com/anton-shumanski/clockwork/data-source"
-	"log"
 	"math/rand"
 	"strconv"
 	"time"
@@ -34,11 +31,6 @@ func (clockwork *Clockwork) Resolve() *dataSource.DataBuffer {
 		source.Resolve(clockwork.data)
 	}
 
-	a, err := json.Marshal(clockwork.data)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	fmt.Println(string(a))
 	return clockwork.data
 }
 
