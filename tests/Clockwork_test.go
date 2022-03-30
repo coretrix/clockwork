@@ -51,7 +51,6 @@ func TestClockwork_GetData(t *testing.T) {
 
 	customDataSource.SetShowAs("table")
 	customDataSource.SetTitle("test")
-	customDataSource.Log(map[string]interface{}{"a": 1}, "a1", "table", map[string]string{"a": "A"})
 
 	response := profiler.Resolve()
 	fmt.Println(response.UserData)
