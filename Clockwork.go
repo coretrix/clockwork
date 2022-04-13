@@ -1,7 +1,7 @@
 package clockwork
 
 import (
-	dataSource "github.com/anton-shumanski/clockwork/data-source"
+	dataSource "github.com/coretrix/clockwork/data-source"
 	"math/rand"
 	"strconv"
 	"time"

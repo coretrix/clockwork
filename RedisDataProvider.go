@@ -2,7 +2,7 @@ package clockwork
 
 import (
 	"encoding/json"
-	dataSource "github.com/anton-shumanski/clockwork/data-source"
+	dataSource "github.com/coretrix/clockwork/data-source"
 	"github.com/go-redis/redis/v7"
 	"time"
 )

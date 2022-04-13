@@ -6,7 +6,7 @@
 package main
 import (
 
-"github.com/anton-shumanski/clockwork"
+"github.com/coretrix/clockwork"
 "github.com/go-redis/redis"
 )
 

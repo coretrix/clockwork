@@ -2,8 +2,8 @@ package tests
 
 import (
 	"fmt"
-	"github.com/anton-shumanski/clockwork"
-	dataSource "github.com/anton-shumanski/clockwork/data-source"
+	"github.com/coretrix/clockwork"
+	dataSource "github.com/coretrix/clockwork/data-source"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
