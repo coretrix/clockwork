@@ -1,3 +1,7 @@
+[![test status](https://github.com/go-gorm/gorm/workflows/tests/badge.svg?branch=master "test status")](https://github.com/coretrix/clockwork/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/coretrix/clockwork)](https://goreportcard.com/report/github.com/coretrix/clockwork)
+[![GPL3 license](https://img.shields.io/badge/license-GPL3-brightgreen.svg)](https://opensource.org/licenses/GPL-3.0)
+
 # Server-side component for Clockwork browser extension written in GO
 
 ## Attach and use data-sources to clockwork instance.
