@@ -1,4 +1,4 @@
-module github.com/anton-shumanski/clockwork
+module github.com/coretrix/clockwork
 
 go 1.16
 
