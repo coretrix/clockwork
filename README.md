@@ -112,6 +112,6 @@ profiler.SaveData()
 
 The last thing u need to do is to send 2 special headers into the response:
 ```go
-c.Writer.Header().Set("X-Clockwork-Id", profiler.GetUniqueId())
+c.Writer.Header().Set("X-Clockwork-Id", profiler.GetUniqueID())
 c.Writer.Header().Set("X-Clockwork-Version", "4.0.13")
 ```
