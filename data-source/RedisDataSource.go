@@ -1,4 +1,4 @@
-package dataSource
+package datasource
 
 type CommandLoggerDataSourceInterface interface {
 	DataSource

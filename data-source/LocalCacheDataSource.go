@@ -1,4 +1,4 @@
-package dataSource
+package datasource
 
 import "fmt"
 
@@ -76,5 +76,4 @@ func (source *UserDataDataSource) Resolve(dataBuffer *DataBuffer) {
 		data[k] = v
 	}
 	dataBuffer.UserData = append(dataBuffer.UserData, data)
-
 }

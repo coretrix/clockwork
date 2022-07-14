@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -54,7 +53,7 @@ func TestClockwork_GetData(t *testing.T) {
 	customDataSource.SetTitle("test")
 
 	response := profiler.Resolve()
-	fmt.Println(response.UserData)
+
 	assert.Equal(t, len(response.TimelineData), 2)
 	assert.Equal(t, len(response.DatabaseQueries), 2)
 	assert.Equal(t, len(response.CacheQueries), 1)

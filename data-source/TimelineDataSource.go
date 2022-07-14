@@ -1,4 +1,4 @@
-package dataSource
+package datasource
 
 import (
 	"time"
@@ -25,7 +25,6 @@ type TimelineDataSource struct {
 	commands    map[string]interface{}
 	startTime   map[string]time.Time
 	description map[string]string
-	data        []string
 }
 
 func (source *TimelineDataSource) StartEvent(event string, description string) {

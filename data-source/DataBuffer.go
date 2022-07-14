@@ -1,4 +1,4 @@
-package dataSource
+package datasource
 
 type DataBuffer struct {
 	Log                  []interface{}            `json:"log"`

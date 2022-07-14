@@ -36,21 +36,20 @@ func (clockwork *Clockwork) Resolve() *dataSource.DataBuffer {
 }
 
 func (clockwork *Clockwork) SaveData() {
-	clockwork.DataProvider.Set(key, clockwork.GetUniqueId(), clockwork.Resolve())
+	clockwork.DataProvider.Set(key, clockwork.GetUniqueID(), clockwork.Resolve())
 }
 
 func (clockwork *Clockwork) GetSavedData(id string) dataSource.DataBuffer {
 	return clockwork.DataProvider.Get(key, id)
 }
 
-func (clockwork *Clockwork) GetUniqueId() string {
+func (clockwork *Clockwork) GetUniqueID() string {
 	if clockwork.id != "" {
 		return clockwork.id
 	}
 
-	now := time.Now()
-	sec := now.Unix()
-	clockwork.id = strconv.FormatInt(sec, 10) + "-" + strconv.FormatInt(rand.Int63(), 10)
+	//nolint
+	clockwork.id = strconv.FormatInt(time.Now().Unix(), 10) + "-" + strconv.FormatInt(rand.Int63(), 10)
 
 	return clockwork.id
 }

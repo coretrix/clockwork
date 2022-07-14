@@ -1,4 +1,4 @@
-package dataSource
+package datasource
 
 import "fmt"
 
@@ -39,14 +39,14 @@ type CacheDataSource struct {
 func (source *CacheDataSource) LogCache(connection, typeParam, action string, key string, value string, duration float32, expiration float32) {
 	switch typeParam {
 	case CacheHit:
-		source.cacheHits += 1
-		source.cacheReads += 1
+		source.cacheHits++
+		source.cacheReads++
 	case CacheWrite:
-		source.cacheWrites += 1
+		source.cacheWrites++
 	case CacheDelete:
-		source.cacheDeletes += 1
+		source.cacheDeletes++
 	default:
-		panic("There is no supported type " + typeParam)
+		panic("there is no supported type " + typeParam)
 	}
 
 	structure := cacheDataStructure{
@@ -76,7 +76,7 @@ func (source *CacheDataSource) LogCacheMiss(connection, action string, key strin
 		structure.Type = fmt.Sprintf("MISSES [%d] %s", misses, action)
 	}
 
-	source.cacheReads += 1
+	source.cacheReads++
 	source.totalDuration += duration
 	source.commands = append(source.commands, &structure)
 }

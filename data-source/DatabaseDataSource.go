@@ -1,4 +1,4 @@
-package dataSource
+package datasource
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ type QueryLoggerInterface interface {
 	LogQuery(model, query string, duration float32, bind []interface{})
 }
 
-type mySqlStructure = struct {
+type mySQLStructure = struct {
 	Model      string   `json:"model"`
 	Query      string   `json:"query"`
 	Duration   float32  `json:"duration"`
@@ -33,7 +33,7 @@ func (source *DatabaseDataSource) LogQuery(model, query string, duration float32
 		tags = append(tags, "slow")
 	}
 
-	structure := mySqlStructure{
+	structure := mySQLStructure{
 		Model:      model,
 		Query:      query + " [" + fmt.Sprintf("%v", bind) + "]",
 		Duration:   duration,
