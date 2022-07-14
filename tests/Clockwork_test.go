@@ -2,11 +2,12 @@ package tests
 
 import (
 	"fmt"
+	"testing"
+	"time"
+
 	"github.com/coretrix/clockwork"
 	dataSource "github.com/coretrix/clockwork/data-source"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 func TestClockwork_GetData(t *testing.T) {

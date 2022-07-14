@@ -2,9 +2,10 @@ package clockwork
 
 import (
 	"encoding/json"
+	"time"
+
 	dataSource "github.com/coretrix/clockwork/data-source"
 	"github.com/go-redis/redis/v7"
-	"time"
 )
 
 type RedisDataProvider struct {

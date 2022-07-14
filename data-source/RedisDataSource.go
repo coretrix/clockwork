@@ -10,20 +10,20 @@ type CommandLoggerInterface interface {
 }
 
 type redisStructure struct {
-	Command string `json:"command"`
+	Command    string            `json:"command"`
 	Parameters map[string]string `json:"parameters"`
-	Duration float32 `json:"duration"`
+	Duration   float32           `json:"duration"`
 }
 
 type RedisDataSource struct {
 	commands []interface{}
 }
 
-func (source *RedisDataSource) LogCommand(command string, key string, duration float32)  {
+func (source *RedisDataSource) LogCommand(command string, key string, duration float32) {
 	structure := redisStructure{
-		Command: command,
+		Command:    command,
 		Parameters: map[string]string{"key": key},
-		Duration: duration,
+		Duration:   duration,
 	}
 
 	source.commands = append(source.commands, &structure)

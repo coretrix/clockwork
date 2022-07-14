@@ -1,10 +1,11 @@
 package clockwork
 
 import (
-	dataSource "github.com/coretrix/clockwork/data-source"
 	"math/rand"
 	"strconv"
 	"time"
+
+	dataSource "github.com/coretrix/clockwork/data-source"
 )
 
 const key = "profiler_store"
