@@ -20,7 +20,12 @@ func (provider *RedisDataProvider) Get(key string, id string) dataSource.DataBuf
 
 	provider.RedisStorageProvider.Expire(key, time.Minute*5)
 	var raw dataSource.DataBuffer
+
 	err = json.Unmarshal([]byte(result), &raw)
+
+	if err != nil {
+		panic(err)
+	}
 
 	return raw
 }
