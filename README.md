@@ -1,4 +1,4 @@
-![tests status](https://github.com/coretrix/clockwork/actions/workflows/main.yml/badge.svg)(https://github.com/coretrix/clockwork/actions)
+![tests](https://github.com/coretrix/clockwork/actions/workflows/main.yml/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/coretrix/clockwork)](https://goreportcard.com/report/github.com/coretrix/clockwork)
 [![GPL3 license](https://img.shields.io/badge/license-GPL3-brightgreen.svg)](https://opensource.org/licenses/GPL-3.0)
 
