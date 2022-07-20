@@ -1,6 +1,7 @@
 package datasource
 
 import (
+	"sync"
 	"time"
 )
 
@@ -25,9 +26,13 @@ type TimelineDataSource struct {
 	commands    map[string]interface{}
 	startTime   map[string]time.Time
 	description map[string]string
+	mutex       *sync.Mutex
 }
 
 func (source *TimelineDataSource) StartEvent(event string, description string) {
+	source.lock()
+	defer source.unlock()
+
 	if len(source.startTime) == 0 {
 		source.startTime = make(map[string]time.Time)
 	}
@@ -45,6 +50,9 @@ func (source *TimelineDataSource) StartEvent(event string, description string) {
 }
 
 func (source *TimelineDataSource) EndEvent(event string) {
+	source.lock()
+	defer source.unlock()
+
 	start := MicroTime(source.startTime[event])
 	end := MicroTime(time.Now())
 
@@ -57,5 +65,21 @@ func (source *TimelineDataSource) EndEvent(event string) {
 }
 
 func (source *TimelineDataSource) Resolve(dataBuffer *DataBuffer) {
+	source.lock()
+	defer source.unlock()
+
 	dataBuffer.TimelineData = source.commands
+}
+
+func (source *TimelineDataSource) lock() {
+	if source.mutex == nil {
+		source.mutex = &sync.Mutex{}
+	}
+	source.mutex.Lock()
+}
+func (source *TimelineDataSource) unlock() {
+	if source.mutex == nil {
+		panic("lock first")
+	}
+	source.mutex.Unlock()
 }
