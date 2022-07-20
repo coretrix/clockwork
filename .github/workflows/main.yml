@@ -1,4 +1,4 @@
-name: Go
+name: Clockwork
 on: [push]
 jobs:
 
