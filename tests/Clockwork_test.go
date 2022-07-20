@@ -4,9 +4,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/coretrix/clockwork"
 	dataSource "github.com/coretrix/clockwork/data-source"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestClockwork_GetData(t *testing.T) {

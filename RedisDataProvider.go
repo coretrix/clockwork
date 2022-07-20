@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"time"
 
-	dataSource "github.com/coretrix/clockwork/data-source"
 	"github.com/go-redis/redis/v7"
+
+	dataSource "github.com/coretrix/clockwork/data-source"
 )
 
 type RedisDataProvider struct {
