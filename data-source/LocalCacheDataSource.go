@@ -1,6 +1,9 @@
 package datasource
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 const typeTable = "table"
 const typeCounters = "counters"
@@ -17,6 +20,7 @@ type UserDataInterface interface {
 }
 
 type UserDataDataSource struct {
+	mutex       *sync.Mutex
 	rowsByTitle map[string]map[string]interface{}
 	counter     int
 	Title       string                   `json:"title"`
@@ -24,9 +28,13 @@ type UserDataDataSource struct {
 	ShowAs      string                   `json:"showAs"` // Describes how the data should be presented ("counters" or "table")
 }
 
+//LogTable
 //labels:  Map of human-readable labels for the data contents
 //showAs:  Describes how the data should be presented ("counters" or "table")
 func (source *UserDataDataSource) LogTable(data map[string]interface{}, title string, labels map[string]string) {
+	source.lock()
+	defer source.unlock()
+
 	if source.rowsByTitle == nil {
 		source.rowsByTitle = map[string]map[string]interface{}{}
 	}
@@ -53,14 +61,23 @@ func (source *UserDataDataSource) LogTable(data map[string]interface{}, title st
 }
 
 func (source *UserDataDataSource) SetShowAs(showAs string) {
+	source.lock()
+	defer source.unlock()
+
 	source.ShowAs = showAs
 }
 
 func (source *UserDataDataSource) SetTitle(title string) {
+	source.lock()
+	defer source.unlock()
+
 	source.Title = title
 }
 
 func (source *UserDataDataSource) Resolve(dataBuffer *DataBuffer) {
+	source.lock()
+	defer source.unlock()
+
 	if dataBuffer.UserData == nil {
 		dataBuffer.UserData = make([]map[string]interface{}, 0)
 	}
@@ -76,4 +93,17 @@ func (source *UserDataDataSource) Resolve(dataBuffer *DataBuffer) {
 		data[k] = v
 	}
 	dataBuffer.UserData = append(dataBuffer.UserData, data)
+}
+
+func (source *UserDataDataSource) lock() {
+	if source.mutex == nil {
+		source.mutex = &sync.Mutex{}
+	}
+	source.mutex.Lock()
+}
+func (source *UserDataDataSource) unlock() {
+	if source.mutex == nil {
+		panic("lock first")
+	}
+	source.mutex.Unlock()
 }
