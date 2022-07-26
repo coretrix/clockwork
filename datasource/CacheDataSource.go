@@ -36,7 +36,7 @@ type CacheDataSource struct {
 	cacheHits     int16
 }
 
-func (source *CacheDataSource) LogCache(connection, typeParam, action string, key string, value string, duration float32, expiration float32) {
+func (source *CacheDataSource) LogCache(connection, typeParam, action, key, value string, duration, expiration float32) {
 	switch typeParam {
 	case CacheHit:
 		source.cacheHits++
@@ -62,7 +62,7 @@ func (source *CacheDataSource) LogCache(connection, typeParam, action string, ke
 	source.commands = append(source.commands, &structure)
 }
 
-func (source *CacheDataSource) LogCacheMiss(connection, action string, key string, value string, misses int, duration float32, expiration float32) {
+func (source *CacheDataSource) LogCacheMiss(connection, action, key, value string, misses int, duration, expiration float32) {
 	structure := cacheDataStructure{
 		Key:        key,
 		Value:      value,

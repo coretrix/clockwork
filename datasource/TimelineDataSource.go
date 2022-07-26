@@ -75,6 +75,7 @@ func (source *TimelineDataSource) lock() {
 	if source.mutex == nil {
 		source.mutex = &sync.Mutex{}
 	}
+
 	source.mutex.Lock()
 }
 func (source *TimelineDataSource) unlock() {

@@ -38,6 +38,7 @@ func (source *LoggerDataSource) LogDebugSlice(name string, debugData []string) {
 	for i := 0; i < len(debugData); i += 2 {
 		elementMap[debugData[i]] = debugData[i+1]
 	}
+
 	elementMap["__type__"] = "array"
 
 	_, file, line, _ := runtime.Caller(1)

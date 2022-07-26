@@ -25,7 +25,7 @@ type UserDataDataSource struct {
 	counter     int
 	Title       string                   `json:"title"`
 	Data        []map[string]interface{} `json:"data"`
-	ShowAs      string                   `json:"showAs"` // Describes how the data should be presented ("counters" or "table")
+	ShowAs      string                   `json:"showAs"` // Present data as "counters" or "table"
 }
 
 //LogTable
@@ -92,6 +92,7 @@ func (source *UserDataDataSource) Resolve(dataBuffer *DataBuffer) {
 	for k, v := range source.rowsByTitle {
 		data[k] = v
 	}
+
 	dataBuffer.UserData = append(dataBuffer.UserData, data)
 }
 
@@ -99,11 +100,13 @@ func (source *UserDataDataSource) lock() {
 	if source.mutex == nil {
 		source.mutex = &sync.Mutex{}
 	}
+
 	source.mutex.Lock()
 }
 func (source *UserDataDataSource) unlock() {
 	if source.mutex == nil {
 		panic("lock first")
 	}
+
 	source.mutex.Unlock()
 }

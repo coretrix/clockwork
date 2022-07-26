@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-redis/redis/v7"
 
-	dataSource "github.com/coretrix/clockwork/data-source"
+	dataSource "github.com/coretrix/clockwork/datasource"
 )
 
 type RedisDataProvider struct {
@@ -34,6 +34,7 @@ func (provider *RedisDataProvider) Get(key string, id string) dataSource.DataBuf
 func (provider *RedisDataProvider) Set(key string, id string, data *dataSource.DataBuffer) {
 	jsonString, _ := json.Marshal(data)
 	err := provider.RedisStorageProvider.HSet(key, id, jsonString).Err()
+
 	if err != nil {
 		panic(err)
 	}

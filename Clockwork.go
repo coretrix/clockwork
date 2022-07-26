@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	dataSource "github.com/coretrix/clockwork/data-source"
+	dataSource "github.com/coretrix/clockwork/datasource"
 )
 
 const key = "profiler_store"
@@ -23,6 +23,7 @@ type Clockwork struct {
 
 func (clockwork *Clockwork) AddDataSource(source dataSource.DataSource) *dataSource.DataSource {
 	clockwork.dataSources = append(clockwork.dataSources, source)
+
 	return &source
 }
 
@@ -48,7 +49,7 @@ func (clockwork *Clockwork) GetUniqueID() string {
 		return clockwork.id
 	}
 
-	//nolint
+	//nolint //G404: Use of weak random number generator (math/rand instead of crypto/rand)
 	clockwork.id = strconv.FormatInt(time.Now().Unix(), 10) + "-" + strconv.FormatInt(rand.Int63(), 10)
 
 	return clockwork.id

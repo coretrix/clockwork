@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/coretrix/clockwork"
-	dataSource "github.com/coretrix/clockwork/data-source"
+	dataSource "github.com/coretrix/clockwork/datasource"
 )
 
 func TestClockwork_GetData(t *testing.T) {
@@ -32,6 +32,7 @@ func TestClockwork_GetData(t *testing.T) {
 	middleware := []string{"Authorize", "Normalization", "Guard", "Handler"}
 
 	bind2 = append(bind2, 1, 2, "test param")
+
 	mysqlDataSource.LogQuery("mysql", "SELECT * FROM users", 12.224, bind1)
 	mysqlDataSource.LogQuery("mysql", "SELECT * FROM address where id = ?", 1, bind2)
 
