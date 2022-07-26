@@ -27,14 +27,18 @@ func TestClockwork_GetData(t *testing.T) {
 	profiler.SetDatabaseDataSource(mysqlDataSource)
 
 	requestResponseDataSource.SetStartTime(time.Now())
+
 	var bind1 []interface{}
 	var bind2 []interface{}
+	var bind3 []interface{}
+
 	middleware := []string{"Authorize", "Normalization", "Guard", "Handler"}
 
 	bind2 = append(bind2, 1, 2, "test param")
 
 	mysqlDataSource.LogQuery("mysql", "SELECT * FROM users", 12.224, bind1)
 	mysqlDataSource.LogQuery("mysql", "SELECT * FROM address where id = ?", 1, bind2)
+	mysqlDataSource.LogQuery("mysql", "SELECT * FROM big_table", 55, bind3)
 
 	redisDataSource.LogCommand("hSet", "test_key_1", 0.12)
 	redisDataSource.LogCommand("hGet", "test_key_1", 0.15)
@@ -57,10 +61,10 @@ func TestClockwork_GetData(t *testing.T) {
 	response := profiler.Resolve()
 
 	assert.Equal(t, len(response.TimelineData), 2)
-	assert.Equal(t, len(response.DatabaseQueries), 2)
+	assert.Equal(t, len(response.DatabaseQueries), 3)
 	assert.Equal(t, len(response.CacheQueries), 1)
 	assert.Equal(t, len(response.RedisCommands), 2)
-	assert.Equal(t, response.DatabaseQueriesCount, 2)
+	assert.Equal(t, response.DatabaseQueriesCount, 3)
 	assert.Equal(t, response.ResponseStatus, int16(200))
 	assert.Equal(t, response.CacheReads, int16(1))
 	assert.Equal(t, response.CacheHits, int16(0))
