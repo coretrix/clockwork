@@ -1,0 +1,14 @@
+# https://docs.codecov.io/docs/commit-status
+coverage:
+    range: 20..80
+    round: down
+    precision: 0
+    status:
+      project:
+        default:
+          target: 50%
+          threshold: 0%
+      patch:
+        default:
+          target: 55%
+          threshold: 0%
