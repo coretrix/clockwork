@@ -71,4 +71,5 @@ func TestClockwork_GetData(t *testing.T) {
 	assert.Equal(t, response.CacheDeletes, int16(0))
 	assert.Equal(t, response.CacheWrites, int16(0))
 	assert.Equal(t, response.Middleware, middleware)
+	assert.NotEqual(t, "", profiler.GetUniqueID())
 }
