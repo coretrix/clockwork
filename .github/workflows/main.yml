@@ -33,7 +33,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run tests
+      - name: Run tests with coverage
         run: |
           export GOPATH=$(go env GOPATH)
-          make test
+          make test-cover
+      - name: Upload report to codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
