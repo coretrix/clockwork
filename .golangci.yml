@@ -33,7 +33,7 @@ linters-settings:
       - default # Default section: contains all imports that could not be matched to another section type.
       - prefix(github.com/coretrix/clockwork) # Custom section: groups all imports with the specified Prefix.
   lll:
-    line-length: 150
+    line-length: 160
   misspell:
     locale: US
   nolintlint:
