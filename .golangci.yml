@@ -1,5 +1,4 @@
 linters:
-  disable-all: true
   enable:
     - forbidigo
     - goimports
@@ -43,6 +42,10 @@ linters-settings:
     forbid:
       - ^fmt\.Print(|f|ln)$
       - ^spew\.Dump$
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
 
 run:
   timeout: 180s
