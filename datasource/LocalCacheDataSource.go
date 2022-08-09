@@ -28,9 +28,9 @@ type UserDataDataSource struct {
 	ShowAs      string                   `json:"showAs"` // Present data as "counters" or "table"
 }
 
-//LogTable
-//labels:  Map of human-readable labels for the data contents
-//showAs:  Describes how the data should be presented ("counters" or "table")
+// LogTable
+// labels:  Map of human-readable labels for the data contents
+// showAs:  Describes how the data should be presented ("counters" or "table")
 func (source *UserDataDataSource) LogTable(data map[string]interface{}, title string, labels map[string]string) {
 	source.lock()
 	defer source.unlock()
